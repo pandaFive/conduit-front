@@ -32,7 +32,12 @@ export default function Home() {
             <div className="article-preview">
               <div className="article-meta">
                 <a href="/profile/eric-simons">
-                  <img src="http://i.imgur.com/Qr71crq.jpg" />
+                  <Image
+                    src="http://i.imgur.com/Qr71crq.jpg"
+                    alt="user icon"
+                    width={32}
+                    height={32}
+                  />
                 </a>
                 <div className="info">
                   <a href="/profile/eric-simons" className="author">
@@ -65,7 +70,12 @@ export default function Home() {
             <div className="article-preview">
               <div className="article-meta">
                 <a href="/profile/albert-pai">
-                  <img src="http://i.imgur.com/N4VcUeJ.jpg" />
+                  <Image
+                    src="http://i.imgur.com/N4VcUeJ.jpg"
+                    alt="user icon"
+                    width={32}
+                    height={32}
+                  />
                 </a>
                 <div className="info">
                   <a href="/profile/albert-pai" className="author">
