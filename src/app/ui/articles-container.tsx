@@ -26,7 +26,7 @@ export default async function ArticlesContainer({
 }: {
   currentPage: number;
 }) {
-  const articles = await getArticles().then((data) => data.articles);
+  const articles = await getArticles(currentPage).then((data) => data.articles);
   const totalPage = await getArticlesPages();
   return (
     <div className="col-md-9">
