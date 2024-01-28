@@ -1,35 +1,59 @@
-export default function Page() {
+import { getArticle } from "@/api/get-article";
+import { getUser } from "@/api/get-user";
+import { formatDate } from "@/utils/format-date";
+import Image from "next/image";
+
+export default async function Page({ params }: { params: { slug: string } }) {
+  const slug = params.slug;
+
+  const currentUser = await getUser();
+  const data = await getArticle(slug);
+  const day = formatDate(new Date(data.article.createdAt));
+  const authorName = data.article.author.username;
+
   return (
     <div className="article-page">
       <div className="banner">
         <div className="container">
-          <h1>How to build webapps that scale</h1>
+          <h1>{data.article.title}</h1>
 
           <div className="article-meta">
             <a href="/profile/eric-simons">
-              <img src="http://i.imgur.com/Qr71crq.jpg" />
+              <Image
+                src="http://i.imgur.com/Qr71crq.jpg"
+                alt="user icon"
+                width={32}
+                height={32}
+              />
             </a>
             <div className="info">
               <a href="/profile/eric-simons" className="author">
-                Eric Simons
+                {authorName}
               </a>
-              <span className="date">January 20th</span>
+              <span className="date">{day}</span>
             </div>
             <button className="btn btn-sm btn-outline-secondary">
               <i className="ion-plus-round"></i>
-              &nbsp; Follow Eric Simons <span className="counter">(10)</span>
+              &nbsp; Follow {authorName} <span className="counter">(10)</span>
             </button>
             &nbsp;&nbsp;
             <button className="btn btn-sm btn-outline-primary">
               <i className="ion-heart"></i>
-              &nbsp; Favorite Post <span className="counter">(29)</span>
+              &nbsp; Favorite Post{" "}
+              <span className="counter">({data.article.favoritesCount})</span>
             </button>
-            <button className="btn btn-sm btn-outline-secondary">
-              <i className="ion-edit"></i> Edit Article
-            </button>
-            <button className="btn btn-sm btn-outline-danger">
-              <i className="ion-trash-a"></i> Delete Article
-            </button>
+            {data.article.author.username === currentUser.username ? (
+              <>
+                <button className="btn btn-sm btn-outline-secondary">
+                  <i className="ion-edit"></i> Edit Article
+                </button>
+                <button className="btn btn-sm btn-outline-danger">
+                  <i className="ion-trash-a"></i> Delete Article
+                </button>
+              </>
+            ) : (
+              <></>
+            )}
           </div>
         </div>
       </div>
@@ -37,19 +61,14 @@ export default function Page() {
       <div className="container page">
         <div className="row article-content">
           <div className="col-md-12">
-            <p>
-              Web development technologies have evolved at an incredible clip
-              over the past few years.
-            </p>
-            <h2 id="introducing-ionic">Introducing RealWorld.</h2>
-            <p>
-              It&apos;s a great solution for learning how other frameworks work.
-            </p>
+            <p>{data.article.description}</p>
+            <div>{data.article.body}</div>
             <ul className="tag-list">
-              <li className="tag-default tag-pill tag-outline">realworld</li>
-              <li className="tag-default tag-pill tag-outline">
-                implementations
-              </li>
+              {data.article.tagList?.map((tag: string) => (
+                <li key={tag} className="tag-default tag-pill tag-outline">
+                  {tag}
+                </li>
+              ))}
             </ul>
           </div>
         </div>
@@ -59,29 +78,41 @@ export default function Page() {
         <div className="article-actions">
           <div className="article-meta">
             <a href="profile.html">
-              <img src="http://i.imgur.com/Qr71crq.jpg" />
+              <Image
+                src="http://i.imgur.com/Qr71crq.jpg"
+                alt="user icon"
+                width={32}
+                height={32}
+              />
             </a>
             <div className="info">
               <a href="" className="author">
-                Eric Simons
+                {authorName}
               </a>
-              <span className="date">January 20th</span>
+              <span className="date">{day}</span>
             </div>
             <button className="btn btn-sm btn-outline-secondary">
               <i className="ion-plus-round"></i>
-              &nbsp; Follow Eric Simons
+              &nbsp; Follow {authorName}
             </button>
             &nbsp;
             <button className="btn btn-sm btn-outline-primary">
               <i className="ion-heart"></i>
-              &nbsp; Favorite Article <span className="counter">(29)</span>
+              &nbsp; Favorite Article{" "}
+              <span className="counter">({data.article.favoritesCount})</span>
             </button>
-            <button className="btn btn-sm btn-outline-secondary">
-              <i className="ion-edit"></i> Edit Article
-            </button>
-            <button className="btn btn-sm btn-outline-danger">
-              <i className="ion-trash-a"></i> Delete Article
-            </button>
+            {currentUser.username === authorName ? (
+              <>
+                <button className="btn btn-sm btn-outline-secondary">
+                  <i className="ion-edit"></i> Edit Article
+                </button>
+                <button className="btn btn-sm btn-outline-danger">
+                  <i className="ion-trash-a"></i> Delete Article
+                </button>
+              </>
+            ) : (
+              <></>
+            )}
           </div>
         </div>
 
@@ -96,9 +127,12 @@ export default function Page() {
                 ></textarea>
               </div>
               <div className="card-footer">
-                <img
+                <Image
                   src="http://i.imgur.com/Qr71crq.jpg"
                   className="comment-author-img"
+                  alt="user icon"
+                  width={32}
+                  height={32}
                 />
                 <button className="btn btn-sm btn-primary">Post Comment</button>
               </div>
@@ -113,9 +147,12 @@ export default function Page() {
               </div>
               <div className="card-footer">
                 <a href="/profile/author" className="comment-author">
-                  <img
+                  <Image
                     src="http://i.imgur.com/Qr71crq.jpg"
                     className="comment-author-img"
+                    alt="user icon"
+                    width={32}
+                    height={32}
                   />
                 </a>
                 &nbsp;
@@ -135,9 +172,12 @@ export default function Page() {
               </div>
               <div className="card-footer">
                 <a href="/profile/author" className="comment-author">
-                  <img
+                  <Image
                     src="http://i.imgur.com/Qr71crq.jpg"
                     className="comment-author-img"
+                    alt="user icon"
+                    width={32}
+                    height={32}
                   />
                 </a>
                 &nbsp;
