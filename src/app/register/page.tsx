@@ -1,3 +1,5 @@
+import { registerAction } from "@/utils/actions/register";
+
 export default function Page() {
   return (
     <div className="auth-page">
@@ -9,16 +11,13 @@ export default function Page() {
               <a href="/login">Have an account?</a>
             </p>
 
-            <ul className="error-messages">
-              <li>That email is already taken</li>
-            </ul>
-
-            <form>
+            <form action={registerAction}>
               <fieldset className="form-group">
                 <input
                   className="form-control form-control-lg"
                   type="text"
                   placeholder="Username"
+                  name="username"
                 />
               </fieldset>
               <fieldset className="form-group">
@@ -26,6 +25,7 @@ export default function Page() {
                   className="form-control form-control-lg"
                   type="text"
                   placeholder="Email"
+                  name="email"
                 />
               </fieldset>
               <fieldset className="form-group">
@@ -33,6 +33,7 @@ export default function Page() {
                   className="form-control form-control-lg"
                   type="password"
                   placeholder="Password"
+                  name="password"
                 />
               </fieldset>
               <button className="btn btn-lg btn-primary pull-xs-right">
