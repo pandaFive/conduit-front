@@ -13,10 +13,6 @@ export async function editAction(formData: FormData) {
 
   if ("article" in result) {
     redirect("/");
-    return {
-      errors: null,
-      article: result.article,
-    };
   } else {
     return {
       errors: result,

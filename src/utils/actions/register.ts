@@ -14,10 +14,6 @@ export async function registerAction(formData: FormData) {
   if ("user" in result) {
     await setCookie("token", result.user.token);
     redirect("/");
-    return {
-      errors: null,
-      user: result.user,
-    };
   } else {
     return {
       errors: result,
