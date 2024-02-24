@@ -1,7 +1,5 @@
-import { API_URL } from "./config";
-
 export async function getArticle(slug: string) {
-  const res = await fetch(`${API_URL}/articles/${slug}`, {
+  const res = await fetch(`${process.env.API_HOST}/articles/${slug}`, {
     cache: "no-store",
   });
 

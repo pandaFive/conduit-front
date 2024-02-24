@@ -1,7 +1,5 @@
-import { API_URL } from "./config";
-
 export async function getTags() {
-  const res = await fetch(`${API_URL}/tags`, {
+  const res = await fetch(`${process.env.API_HOST}/tags`, {
     cache: "no-store",
   });
   const data = await res.json().then((d) => d.tags);

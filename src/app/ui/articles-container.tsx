@@ -28,6 +28,7 @@ export default async function ArticlesContainer({
 }) {
   const articles = await getArticles(currentPage).then((data) => data.articles);
   const totalPage = await getArticlesPages();
+
   return (
     <div className="col-md-9">
       <div className="feed-toggle">

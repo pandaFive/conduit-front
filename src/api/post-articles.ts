@@ -1,4 +1,3 @@
-import { API_URL } from "./config";
 import { getCookies } from "@/utils/cookies";
 
 export async function postArticles(
@@ -8,7 +7,7 @@ export async function postArticles(
   tagList: string[] = []
 ) {
   const token = getCookies("token");
-  const res = await fetch(`${API_URL}/articles`, {
+  const res = await fetch(`${process.env.API_HOST}/articles`, {
     method: "POST",
     cache: "no-store",
     headers: {
