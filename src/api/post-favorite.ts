@@ -1,9 +1,8 @@
-import { API_URL } from "./config";
 import { getCookies } from "@/utils/cookies";
 
 export const postFavorite = async (slug: string) => {
   const token = getCookies("token");
-  const res = await fetch(`${API_URL}/articles/${slug}/favorite`, {
+  const res = await fetch(`${process.env.API_HOST}/articles/${slug}/favorite`, {
     method: "POST",
     cache: "no-store",
     headers: {

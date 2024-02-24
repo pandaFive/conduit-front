@@ -1,7 +1,5 @@
-import { API_URL } from "./config";
-
 export async function postLogin(email: string, password: string) {
-  const res = await fetch(`${API_URL}/users/login`, {
+  const res = await fetch(`${process.env.API_HOST}/users/login`, {
     method: "POST",
     cache: "no-store",
     headers: {

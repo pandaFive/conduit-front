@@ -1,11 +1,9 @@
-import { API_URL } from "./config";
-
 export async function postRegistration(
   username: string,
   email: string,
   password: string
 ) {
-  const res = await fetch(`${API_URL}/users`, {
+  const res = await fetch(`${process.env.API_HOST}/users`, {
     method: "POST",
     cache: "no-store",
     headers: {

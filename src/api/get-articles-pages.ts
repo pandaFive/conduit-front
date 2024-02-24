@@ -1,7 +1,5 @@
-import { API_URL } from "./config";
-
 export async function getArticlesPages() {
-  const res = await fetch(`${API_URL}/articles/count`, {
+  const res = await fetch(`${process.env.API_HOST}/articles/count`, {
     cache: "no-store",
   });
   const data = await res.json().then((d) => Math.ceil(d.count / 20));

@@ -1,5 +1,4 @@
 import { getCookies } from "@/utils/cookies";
-import { API_URL } from "./config";
 
 export async function putUser(
   image: string,
@@ -9,7 +8,7 @@ export async function putUser(
   password: string
 ) {
   const token = getCookies("token");
-  const res = await fetch(`${API_URL}/user`, {
+  const res = await fetch(`${process.env.API_HOST}/user`, {
     method: "PUT",
     cache: "no-store",
     headers: {

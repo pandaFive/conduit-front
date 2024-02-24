@@ -1,7 +1,5 @@
-import { API_URL } from "./config";
-
 export async function getProfile(username: string) {
-  const res = await fetch(`${API_URL}/profile/${username}`, {
+  const res = await fetch(`${process.env.API_HOST}/profile/${username}`, {
     cache: "no-store",
   });
 
